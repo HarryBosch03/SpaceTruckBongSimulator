@@ -9,6 +9,7 @@ namespace SpaceTruckBongSimulator.Player
         [SerializeField] private PlayerInput input;
         [SerializeField] private PlayerMovement movement;
         [SerializeField] private new PlayerCamera camera;
+        [SerializeField] private PlayerInteractor interactor;
         
         public PlayerInput Input => input;
         public PlayerMovement Movement => movement;
@@ -40,11 +41,18 @@ namespace SpaceTruckBongSimulator.Player
             input.Init(this);
             movement.Init(this);
             camera.Init(this);
+            interactor.Init(this);
         }
 
         private void FixedUpdate()
         {
             movement.FixedUpdate();
+        }
+
+        private void Update()
+        {
+            input.Update();
+            interactor.Update();
         }
 
         private void LateUpdate()

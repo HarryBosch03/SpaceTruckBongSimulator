@@ -12,17 +12,27 @@ namespace SpaceTruckBongSimulator.Player
         [SerializeField] private float rollSensitivityScale;
         [SerializeField] private float rollInputSmoothing; 
         
+        [Space]
+        [SerializeField][Range(30.0f, 120.0f)] private float defaultFov = 90.0f; 
+        [SerializeField][Range(30.0f, 120.0f)] private float zoomFov = 40.0f;
+        [SerializeField] private float fovSmoothing = 0.1f; 
+        
         private PlayerController controller;
         private float rollTime;
         private float smoothedRollInput;
 
         private Quaternion cameraRotation;
+        private Camera camera;
+
+        private bool zoom;
+        private float tFov, cFov;
         
         public void Init(PlayerController controller)
         {
             this.controller = controller;
             
             cameraRotation = controller.CameraContainer.rotation;
+            camera = Camera.main;
         }
 
         public void OnEnable()
@@ -34,9 +44,12 @@ namespace SpaceTruckBongSimulator.Player
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        
+
         public void LateUpdate()
         {
+            if (controller.Input.Zoom == PlayerInput.Button.State.PressedThisFrame) zoom = !zoom;
+            tFov = zoom ? zoomFov : defaultFov;
+            
             var delta = Vector3.zero;
 
             if (Mouse.current != null)
@@ -58,6 +71,12 @@ namespace SpaceTruckBongSimulator.Player
             var deltaRotation = Quaternion.Euler(-delta.y, delta.x, -delta.z);
             cameraRotation *= deltaRotation;
             controller.CameraContainer.rotation = cameraRotation;
+
+            camera.transform.position = controller.CameraContainer.position;
+            camera.transform.rotation = controller.CameraContainer.rotation;
+
+            cFov += fovSmoothing > 0.0f ? (tFov - cFov) / fovSmoothing * Time.deltaTime : tFov;
+            camera.fieldOfView = cFov;
         }
     }
 }
