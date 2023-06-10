@@ -1,4 +1,5 @@
 ﻿using System;
+using SpaceTruckBongSimulator.Interactables;
 using UnityEngine;
 
 namespace SpaceTruckBongSimulator.Player
@@ -22,8 +23,24 @@ namespace SpaceTruckBongSimulator.Player
 
         public void FixedUpdate()
         {
+            if (controller.CurrentMount != null)
+            {
+                ProcessMount();
+                return;
+            }
             Move();
             Rotate();
+        }
+
+        private void ProcessMount()
+        {
+            var transform = controller.transform;
+
+            transform.position = controller.CurrentMount.Position;
+            transform.rotation = controller.CurrentMount.Rotation;
+
+            var rb = controller.Rigidbody;
+            rb.isKinematic = true;
         }
 
         private void Rotate()

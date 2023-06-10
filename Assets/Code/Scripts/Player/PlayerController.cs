@@ -1,3 +1,5 @@
+using System;
+using SpaceTruckBongSimulator.Interactables;
 using UnityEngine;
 
 namespace SpaceTruckBongSimulator.Player
@@ -14,9 +16,9 @@ namespace SpaceTruckBongSimulator.Player
         public PlayerInput Input => input;
         public PlayerMovement Movement => movement;
         public PlayerCamera Camera => camera;
-        
+        public IMountable CurrentMount { get; set; }
+
         public Transform CameraContainer { get; private set; }
-        
         public Rigidbody Rigidbody { get; private set; }
 
         private void Awake()
@@ -53,6 +55,11 @@ namespace SpaceTruckBongSimulator.Player
         {
             input.Update();
             interactor.Update();
+
+            if (input.Unmount == PlayerInput.Button.State.PressedThisFrame)
+            {
+                CurrentMount = null;
+            }
         }
 
         private void LateUpdate()

@@ -55,7 +55,10 @@ namespace SpaceTruckBongSimulator.Player
                         case IDraggable draggable:
                             return new Dragging(ctx, draggable);
                         case ISingleInteract single:
-                            single.Interact();
+                            single.Interact(ctx.controller.gameObject);
+                            break;
+                        case IMountable mountable:
+                            ctx.controller.CurrentMount = mountable;
                             break;
                     }
                     return this;

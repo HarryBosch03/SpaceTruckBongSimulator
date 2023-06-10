@@ -29,7 +29,7 @@ namespace SpaceTruckBongSimulator.Interactables
             handle.localPosition = Vector3.Lerp(pressPosition, defaultPosition, handleSpring.position);
         }
 
-        public void Interact()
+        public void Interact(GameObject interactor)
         {
             handleSpring.AddImpulse(-pressImpulse);
         }

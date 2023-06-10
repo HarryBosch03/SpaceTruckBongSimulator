@@ -1,7 +1,9 @@
-﻿namespace SpaceTruckBongSimulator.Interactables
+﻿using UnityEngine;
+
+namespace SpaceTruckBongSimulator.Interactables
 {
     public interface ISingleInteract : IInteractable
     {
-        void Interact();
+        void Interact(GameObject interactor);
     }
 }

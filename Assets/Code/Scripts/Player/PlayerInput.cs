@@ -21,6 +21,7 @@ namespace SpaceTruckBongSimulator.Player
         {
             new Button("Interact"),
             new Button("Zoom"),
+            new Button("Unmount"),
         };
 
         public Vector3 MoveDirection => Vector3.ClampMagnitude(new Vector3
@@ -33,6 +34,7 @@ namespace SpaceTruckBongSimulator.Player
         public float Roll => roll.action.ReadValue<float>();
         public Button.State Interact => buttons[0];
         public Button.State Zoom => buttons[1];
+        public Button.State Unmount => buttons[2];
 
         public void Init(PlayerController controller)
         {
