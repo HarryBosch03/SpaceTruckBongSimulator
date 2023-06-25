@@ -8,6 +8,7 @@ namespace SpaceTruckBongSimulator.Player
     [DisallowMultipleComponent]
     public sealed class PlayerController : MonoBehaviour
     {
+        [SerializeField] private bool mounted;
         [SerializeField] private PlayerInput input;
         [SerializeField] private PlayerMovement movement;
         [SerializeField] private new PlayerCamera camera;
@@ -60,6 +61,8 @@ namespace SpaceTruckBongSimulator.Player
             {
                 CurrentMount = null;
             }
+
+            mounted = CurrentMount != null;
         }
 
         private void LateUpdate()
